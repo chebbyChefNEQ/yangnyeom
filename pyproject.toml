@@ -1,0 +1,15 @@
+[project]
+name = "yangnyeom"
+version = "0.0.1"
+
+dependencies = [
+    "pandas>=2,<3",
+    "matplotlib>=3,<4",
+]
+
+dev-dependencies = [
+    "ruff==0.3.5",
+]
+
+[tool.setuptools]
+package-dir = {"yangnyeom" = "python/yangnyeom"}
