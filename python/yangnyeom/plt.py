@@ -63,3 +63,30 @@ def plot_x_by_y_at_b(
             ax[idx].axes.get_yaxis().set_label_text("")
     fig.suptitle(f"{y} vs {x} @ {b}")
     fig.show()
+
+
+def plot_density(
+    df: pd.Series,
+    vline=None,
+):
+    """
+    plot a series of samples as histogram with a cumulative distribution curve
+    Optionally, add a vertical line at vline as a certain threshold
+    """
+    if not df.name:
+        df.name = "value"
+    hist_y = df.name
+
+    df = df.to_frame()
+    df["cdf"] = df.rank(method="average", pct=True)
+
+    ax = df.plot.hist(
+        y=hist_y, bins=1000, grid=True, title=f"{hist_y} bin", figsize=(16, 9)
+    )
+    if vline:
+        ax.axvline(vline, color="r")
+
+    right_ax = ax.twinx()
+    df.sort_values(hist_y).plot(
+        ax=right_ax, x=hist_y, c="y", grid=True, ylabel="cumulative distribution"
+    )
