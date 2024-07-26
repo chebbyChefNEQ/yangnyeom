@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 from matplotlib import pyplot as plt
 
@@ -67,7 +68,9 @@ def plot_x_by_y_at_b(
 
 def plot_density(
     df: pd.Series,
+    *,
     vline=None,
+    bins="fd",
 ):
     """
     plot a series of samples as histogram with a cumulative distribution curve
@@ -81,7 +84,7 @@ def plot_density(
     df["cdf"] = df.rank(method="average", pct=True)
 
     ax = df.plot.hist(
-        y=hist_y, bins=1000, grid=True, title=f"{hist_y} bin", figsize=(16, 9)
+        y=hist_y, bins=bins, grid=True, title=f"{hist_y} bin", figsize=(16, 9)
     )
     if vline:
         ax.axvline(vline, color="r")
